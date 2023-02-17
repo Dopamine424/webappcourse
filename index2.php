@@ -8,11 +8,11 @@
 </head>
 <body>
 
-    <!-- <?php     
-        // ini_set('display_errors', 0);
-        // ini_set('display_startup_errors', 0);
-        // error_reporting(E_ALL); 
-    ?> -->
+    <?php     
+        ini_set('display_errors', 0);
+        ini_set('display_startup_errors', 0);
+        error_reporting(E_ALL); 
+    ?>
     <h2>Задание 1</h2>
     <?php
         echo floor( (strtotime('01.01.'.date('Y')+1) - time()) /60 /60 /24);
@@ -265,7 +265,7 @@
 
             <h2>Задание 8</h2>
             <?php
-                
+
             ?>
 
             <h2>Задание 9</h2>
@@ -433,55 +433,83 @@
                                          "5+5" =>  ["10"],
                                     );
                                     ?>
+   <form action="index2.php">
+    <label>
+        <?php
+    $qa = [
+        "Вопрос 1" => [
+            "Вопрос" => "1+1?",
+            "Ответ" =>"2"
+        ],
+        "Вопрос 2" => [
+            "Вопрос" => "2+2?",
+            "Ответ" =>"4"
+        ],
+        "Вопрос 3" => [
+            "Вопрос" => "3+3?",
+            "Ответ" =>"6"
+        ],
+        "Вопрос 4" => [
+            "Вопрос" => "4+4 ?",
+            "Ответ" =>"8"
+        ],
+        "Вопрос 5" => [
+            "Вопрос" => "5+5",
+            "Ответ" =>"10"
+        ]
+    ];
+                $counter = 1;
+                foreach ($qa as $q => $qaArray) {
+                    $qstTxt = $qaArray['Вопрос'];
+                    echo "
+                        <div'>
+                            <p>$q</p>
+                            <p>$qstTxt</p>
+                            <input type='text' name='qst$counter'>
+                        </div>
+                    ";
+                    $counter++;
+                }
+        ?>
+        
+    </label>
+    <br>
+    <input type="submit" name="send" value="Отправить">
 
-                                    <?php
-                                        // $array_query = array('1+1','2+2','3+3','4+4','5+5');//вопрос
-                                        // $array_answer = array('2','4','6','8','10');//ответ
-                                        $count_array = count($array_query);
-                                    ?>
-                                    <form action="index2.php">
-                                        <input type="text" name="answer" id="a" placeholder="<?php echo $array_query[0][0]; ?>">
-                                        <input type="text" name="answer_1" id="a" placeholder="<?php echo $array_query[1][1]; ?>">
-                                        <input type="text" name="answer_2" id="a" placeholder="<?php echo $array_query[2][1]; ?>">
-                                        <input type="text" name="answer_3" id="a" placeholder="<?php echo $array_query[3][1]; ?>">
-                                        <input type="text" name="answer_4" id="a" placeholder="<?php echo $array_query[4][1]; ?>">
-                                        <input type="submit" value="Отправить.">
-                                    </form>
-                                    <?php
-                                        
-                                //     $answer_0 = strval($_GET['answer']);
-                                //     $answer_1 = strval($_GET['answer_1']);
-                                //     $answer_2 = strval($_GET['answer_2']);
-                                //     $answer_3 = strval($_GET['answer_3']);
-                                //     $answer_4 = strval($_GET['answer_4']);//добавить ,если ответов больше 5-ти
 
-                                //     $answer = array(
-                                //         "1+1" => [$answer_0],
-                                //         "2+2" =>  [$answer_1],
-                                //         "3+3" => [$answer_2],
-                                //         "4+4" =>  [$answer_3],
-                                //         "5+5" =>  [$answer_4],
-                                //    );
-                                    // $answer_array_push = array();
-                                    //  array_push($answer_array_push,$answer_0,$answer_1,$answer_2,$answer_3,$answer_4);//тоже добавить, если вопросов и ответов более 5-ти
-                                    //   for($i = 0; $i < $count_array; $i++) {
-                                    //        if($answer_array_push[$i] == $array_query[$i]) {
-                                    //          echo "<span style='color: green'>Great answer:  ".$array_query[][$i]."   </span>";
-                                    //       }
-                                    //       else{
-                                    //            echo "<span style='color: red'>   not answer: ".$answer_array_push[$i]."    for query:   ".$array_query[][$i]."   </span>";
-                                    //      }
-                                    // }
-                                    // foreach ($array_query as $key => $value) {
-                                    //     if ($array_query[$key][$value] == $answer[$key][$value]) {
-                                    //         echo "<span style='color: green'>Great answer:  ".$answer[$key][$value]."   </span>";
-                                    //     }
-                                    //     else{
-                                    //         echo "<span style='color: red'>".$answer[$key][$value]."   </span>";
-                                    //         }
-                                    // }
-                                        
-                                    ?>
+    <?php
+
+    $counter = 1;
+    foreach ($qa as $q => $qaArray) {
+        $qstTxt = $qaArray['Вопрос'];
+        $answer = $_POST['qst'.$counter];
+        $correctAnswer = $qaArray['Ответ'];
+        $isAnswCorrect = ($answer == $correctAnswer)? true:false;
+        $color = $isAnswCorrect?'green':'red';
+        if($isAnswCorrect){
+            echo "
+            <div style='border:1px solid black; width:fit-content; margin-bottom:5px; border-radius:5px; padding:2px;'>
+                <p>$q</p>
+                <p>$qstTxt</p>
+                <p style='background-color:$color; color:white;'>Ответ: $answer - верен!</p>
+            </div>
+            ";
+            $counter++;
+        }
+        else if(!$isAnswCorrect){
+            echo "
+            <div style='border:1px solid black; width:fit-content; margin-bottom:5px; border-radius:5px; padding:2px;'>
+                <p>$q</p>
+                <p>$qstTxt</p>
+                <p style= 'background-color:$color;'>Ответ: $answer - неверен!</p>
+                <p style= 'background-color:yellow;'>Правильный ответ: $correctAnswer!</p>
+            </div>
+            ";
+            $counter++;
+        }
+        
+    }               
+    ?>
 
                                     <h2>Задание 14</h2>
                                     <form action="index2.php">
