@@ -265,7 +265,7 @@
 
             <h2>Задание 8</h2>
             <?php
-
+                
             ?>
 
             <h2>Задание 9</h2>
@@ -293,8 +293,8 @@
             <?php 
                 $ta2 = $_GET['ta2'];
                 foreach (count_chars($ta2, 1) as $i => $val) {
-                    echo chr($i) . round($val / count((str_split($ta2)), 2));
-                    echo " ";
+                    echo chr($i) . round($val / count((str_split($ta2))), 2);
+                    echo (" ");
                  }
             ?>
 
