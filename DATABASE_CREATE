@@ -1,0 +1,318 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Хост: 127.0.0.1
+-- Время создания: Мар 23 2023 г., 05:58
+-- Версия сервера: 10.4.24-MariaDB
+-- Версия PHP: 8.1.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- База данных: `sklad`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `partia`
+--
+
+CREATE TABLE `partia` (
+  `id_partia` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `partia`
+--
+
+INSERT INTO `partia` (`id_partia`, `quantity`, `price`) VALUES
+(8, 30, 5000),
+(9, 23, 43);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `partia_product2`
+--
+
+CREATE TABLE `partia_product2` (
+  `id_partia` int(11) NOT NULL,
+  `id_product` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `partia_sotrudnic2`
+--
+
+CREATE TABLE `partia_sotrudnic2` (
+  `id_partia` int(11) NOT NULL,
+  `id_sotrudnic` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `product`
+--
+
+CREATE TABLE `product` (
+  `id_product` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `price` int(11) NOT NULL,
+  `date_delivery` date NOT NULL,
+  `date_expiration` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `product`
+--
+
+INSERT INTO `product` (`id_product`, `name`, `price`, `date_delivery`, `date_expiration`) VALUES
+(1, 'Яблоко', 100, '2023-02-17', '2023-02-28');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `slaaad`
+--
+
+CREATE TABLE `slaaad` (
+  `id_slaaad` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `slaaad`
+--
+
+INSERT INTO `slaaad` (`id_slaaad`, `name`) VALUES
+(1, 'Склад 1');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `slaaad_partia`
+--
+
+CREATE TABLE `slaaad_partia` (
+  `id_slaaad` int(11) NOT NULL,
+  `id_partia` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `slaaad_sotrudnic`
+--
+
+CREATE TABLE `slaaad_sotrudnic` (
+  `id_slaaad` int(11) NOT NULL,
+  `id_sotrudnic` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `sold`
+--
+
+CREATE TABLE `sold` (
+  `id_sold` int(11) NOT NULL,
+  `id_product` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `sold_product`
+--
+
+CREATE TABLE `sold_product` (
+  `id_sold` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `sold_product`
+--
+
+INSERT INTO `sold_product` (`id_sold`, `price`, `quantity`, `name`) VALUES
+(3, 3000, 30, 'Виноград');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `sotrudnic`
+--
+
+CREATE TABLE `sotrudnic` (
+  `id_sotrudnic` int(11) NOT NULL,
+  `ФИО` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `sotrudnic`
+--
+
+INSERT INTO `sotrudnic` (`id_sotrudnic`, `ФИО`) VALUES
+(1, 'Иванов Иван Иванович');
+
+--
+-- Индексы сохранённых таблиц
+--
+
+--
+-- Индексы таблицы `partia`
+--
+ALTER TABLE `partia`
+  ADD PRIMARY KEY (`id_partia`);
+
+--
+-- Индексы таблицы `partia_product2`
+--
+ALTER TABLE `partia_product2`
+  ADD PRIMARY KEY (`id_partia`,`id_product`),
+  ADD KEY `id_product` (`id_product`);
+
+--
+-- Индексы таблицы `partia_sotrudnic2`
+--
+ALTER TABLE `partia_sotrudnic2`
+  ADD PRIMARY KEY (`id_partia`,`id_sotrudnic`),
+  ADD KEY `id_sotrudnic` (`id_sotrudnic`);
+
+--
+-- Индексы таблицы `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`id_product`);
+
+--
+-- Индексы таблицы `slaaad`
+--
+ALTER TABLE `slaaad`
+  ADD PRIMARY KEY (`id_slaaad`);
+
+--
+-- Индексы таблицы `slaaad_partia`
+--
+ALTER TABLE `slaaad_partia`
+  ADD PRIMARY KEY (`id_slaaad`,`id_partia`),
+  ADD KEY `id_partia` (`id_partia`);
+
+--
+-- Индексы таблицы `slaaad_sotrudnic`
+--
+ALTER TABLE `slaaad_sotrudnic`
+  ADD PRIMARY KEY (`id_slaaad`,`id_sotrudnic`),
+  ADD KEY `FK_sklad_id` (`id_sotrudnic`);
+
+--
+-- Индексы таблицы `sold`
+--
+ALTER TABLE `sold`
+  ADD PRIMARY KEY (`id_sold`,`id_product`),
+  ADD KEY `id_product` (`id_product`);
+
+--
+-- Индексы таблицы `sold_product`
+--
+ALTER TABLE `sold_product`
+  ADD PRIMARY KEY (`id_sold`);
+
+--
+-- Индексы таблицы `sotrudnic`
+--
+ALTER TABLE `sotrudnic`
+  ADD PRIMARY KEY (`id_sotrudnic`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
+--
+
+--
+-- AUTO_INCREMENT для таблицы `partia`
+--
+ALTER TABLE `partia`
+  MODIFY `id_partia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT для таблицы `product`
+--
+ALTER TABLE `product`
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT для таблицы `slaaad`
+--
+ALTER TABLE `slaaad`
+  MODIFY `id_slaaad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT для таблицы `sold_product`
+--
+ALTER TABLE `sold_product`
+  MODIFY `id_sold` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT для таблицы `sotrudnic`
+--
+ALTER TABLE `sotrudnic`
+  MODIFY `id_sotrudnic` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `partia_product2`
+--
+ALTER TABLE `partia_product2`
+  ADD CONSTRAINT `partia_product2_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `product` (`id_product`);
+
+--
+-- Ограничения внешнего ключа таблицы `partia_sotrudnic2`
+--
+ALTER TABLE `partia_sotrudnic2`
+  ADD CONSTRAINT `partia_sotrudnic2_ibfk_1` FOREIGN KEY (`id_sotrudnic`) REFERENCES `sotrudnic` (`id_sotrudnic`);
+
+--
+-- Ограничения внешнего ключа таблицы `slaaad_partia`
+--
+ALTER TABLE `slaaad_partia`
+  ADD CONSTRAINT `slaaad_partia_ibfk_1` FOREIGN KEY (`id_partia`) REFERENCES `partia` (`id_partia`);
+
+--
+-- Ограничения внешнего ключа таблицы `slaaad_sotrudnic`
+--
+ALTER TABLE `slaaad_sotrudnic`
+  ADD CONSTRAINT `FK_sklad_id` FOREIGN KEY (`id_sotrudnic`) REFERENCES `slaaad` (`id_slaaad`),
+  ADD CONSTRAINT `slaaad_sotrudnic_ibfk_1` FOREIGN KEY (`id_sotrudnic`) REFERENCES `sotrudnic` (`id_sotrudnic`);
+
+--
+-- Ограничения внешнего ключа таблицы `sold`
+--
+ALTER TABLE `sold`
+  ADD CONSTRAINT `FK_sold_product` FOREIGN KEY (`id_sold`) REFERENCES `sold_product` (`id_sold`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sold_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `product` (`id_product`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
